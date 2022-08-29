@@ -1,13 +1,12 @@
 const path = require ('path');
 const webpack = require ('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: ['./client/'],
+  entry: ['./src/client/App.tsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, "build")
@@ -44,6 +43,11 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /.(css|scss)$/,
         include: [/client\/scss\/modules/],
         use: [
@@ -60,12 +64,11 @@ module.exports = {
     ]
   },
   plugins: [
-    isDevelopment && new ReactRefreshWebpackPlugin(), 
     new HtmlWebpackPlugin({
-      title: 'Development 123',
-      template: 'index.html'
+      template: './src/client/index.html',
+      filename: './index.html',
     }),
-  ].filter(Boolean),
+  ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
