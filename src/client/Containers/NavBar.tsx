@@ -1,20 +1,25 @@
 import { useState, useContext } from 'react'
 import React from 'react';
 import { render } from 'react-dom';
-import BookContext from './MainDisplay'
+import { BookContext } from './MainDisplay'
 
-export default function NavBar() {
+export const NavBar = () => {
   const query = useContext(BookContext)
 
   function handleSubmit(e: React.SyntheticEvent<EventTarget>){
     //for forms, use preventDefault to prevent submitting from automatically refreshing the page
     e.preventDefault();
     console.log('stop clicking me you jerk!');
-    const bookSearch = document.getElementById('bookSearch');
-    console.log(bookSearch)
+    // (document.getElementById('bookSearch') as HTMLInputElement).value
+    const bookSearch = (document.getElementById('bookSearch') as HTMLInputElement);
+    console.log(bookSearch.value)
+    const data = 'dummydata' + (Math.random() * 100 ).toString();
+    console.log('dummydata before updating state: ', data)
+    // console.log(typeof data)
     //fetch request to backend with booksearch parameters
     //get object with results back
-    //query.setSearchResults(data)
+    query.setSearchResults(data)
+    console.log('did this shit work',query.searchResults)
   }
 
   return (

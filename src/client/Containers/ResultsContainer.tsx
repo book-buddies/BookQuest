@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { render } from 'react-dom';
-import SearchResult from '../Components/SearchResult';
+import BookCard from '../Components/BookCard';
+import { BookContext } from './MainDisplay';
 
 export default function ResultsContainer() {
+  const context = useContext(BookContext);
   return (
-    <>
-    </>
+    <ul className='resultsContainer'>
+      <BookCard/>
+    </ul>
   );
 }

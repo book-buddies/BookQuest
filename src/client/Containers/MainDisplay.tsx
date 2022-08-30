@@ -1,27 +1,47 @@
 import React, { useState, createContext } from 'react';
 import { render } from 'react-dom';
 import ResultsContainer from './ResultsContainer'
-import NavBar from './NavBar'
+import {NavBar} from './NavBar'
 
 
-interface ContextState {
-  name: string | null;
+// const UserContext = createContext<{
+//   context: string | null,
+//   setContext: (newValue) => void
+// }>({
+//   context: null,
+//   setContext: () => undefined
+// })
+
+// set the type of state you want to handle with context e.g
+// interface searchResultState {
+//   searchResults: string | null;
+//   setSearchResults: (newValue: string) => void
+// }
+interface searchResultContextType {
+  searchResults: string | null;
+  setSearchResults: React.Dispatch<React.SetStateAction<string | null>>
 }
-// const BookContext = createContext <string | null>(null);
-const BookContext = createContext({} as ContextState);
 
-const [searchResults, setSearchResults] = useState('')
+const searchResultState = {
+  searchResults: null as null,
+  setSearchResults: () => {}
+}
 
-export default function MainDisplay() {
+//set an empty object as default state
+// export const BookContext = createContext({} as searchResultState);
+export const BookContext = createContext<searchResultContextType>(searchResultState);
 
 
-  function updateResults(){
-    console.log('hi');
-    // setQuery('hi');
-  }
+
+export const MainDisplay = () => {
+
+const [searchResults, setSearchResults] = useState<string | null>(null);
+
+
   return (
-    <BookContext.Provider value={searchResults}>
+    <BookContext.Provider value={{searchResults,setSearchResults}}>
       <NavBar/>
+      {searchResults || 'no state yet'}
       <ResultsContainer/>
     </BookContext.Provider>
   );
