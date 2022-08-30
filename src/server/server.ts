@@ -14,10 +14,11 @@ const app = express();
 
 app.use(express.json());
 
-// app.use('/api/', bookController)
+app.use('/api/:input', bookController.getTitle, bookController.getISBN, 
+  (req: Request, res: Response) =>{res.status(200).json(res.locals.bookData)})
 
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).send('../client/components/index.html');
+  res.status(200).json('../client/components/index.html');
 })
 
 //global error handler
@@ -26,7 +27,7 @@ app.use('/', (err: ServerError, req: Request, res: Response, next: NextFunction)
     log: 'Express error handler caught unknown middleware error',
     status: 404,
     message: {
-      err: 'An error has occured'
+      err: err
     }
   }
   const errorObj = Object.assign({}, defaultErr, err);
