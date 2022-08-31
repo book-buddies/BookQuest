@@ -5,8 +5,6 @@ import { BookContext } from '../Containers/MainDisplay.jsx';
 
 
 export default function ResultsContainer({info}) {
-
-  // const ISBN = '0316067938'
     return (
       <div>
         Title: {info.title}

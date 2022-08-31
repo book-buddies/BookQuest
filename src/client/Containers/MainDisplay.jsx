@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import ResultsContainer from './ResultsContainer.jsx'
 import { NavBar } from './NavBar.jsx'
 
-
 // const UserContext = createContext<{
 //   context: string | null,
 //   setContext: (newValue) => void
