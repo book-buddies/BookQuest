@@ -20,7 +20,7 @@ module.exports = bookController = {
       if (!isNaN(parsed)) return next(); 
       const { input } = req.params;
       //query db and if present from db, send to client, if not, query API
-      const dbfind = await Book.find({input})
+      const dbfind = await Book.find({title: input})
       if (dbfind.length === 0) {
         const bookData = await axios.get(`${openLibrary}title=${req.params.input}`);
         res.locals.bookData = [{
@@ -57,7 +57,8 @@ module.exports = bookController = {
       const { input } = req.params
       //if not in db, pull from api via 2 calls to get author and other relavent information. If in db, pull from DB
       const openLibraryISBN = "http://openlibrary.org/isbn/";
-      const dbfind = await Book.find(req.params.input)
+      const dbfind = await Book.find({isbn: input})
+
       if (dbfind.length === 0) {
         const isbnBookData = await axios.get(
           `${openLibraryISBN}${req.params.input}.json`,
@@ -73,6 +74,7 @@ module.exports = bookController = {
           author_key: isbnBookData.data.authors[0].key,
           isbn: req.params.input,
         }];
+        
         res.locals.didSearch = true;
         return next();
       }
@@ -93,7 +95,7 @@ module.exports = bookController = {
 
   postToDb: async (req, res, next) => {
     //if API was requested, we post to DB
-    if (!res.locals.didSearch) {
+    if (res.locals.didSearch) {
       //post to db
       try {
         Book.create(res.locals.bookData);
