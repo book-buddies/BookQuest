@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {MainDisplay} from './Containers/MainDisplay'
+
+import {MainDisplay} from './Containers/MainDisplay.jsx'
+
 import './style.scss'
 
 const App = () => {
