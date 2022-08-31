@@ -5,6 +5,7 @@
 const path = require('path');
 const axios = require('axios');
 const Book = require('../Model');
+const mongoose = require('mongoose')
 
 
 module.exports = bookController = {
@@ -17,9 +18,9 @@ module.exports = bookController = {
       //if it's a number, move on
       const parsed = parseInt(req.params.input);
       if (!isNaN(parsed)) return next(); 
-      
+      const { input } = req.params;
       //query db and if present from db, send to client, if not, query API
-      const dbfind = await Book.find(req.params.input)
+      const dbfind = await Book.find({input})
       if (dbfind.length === 0) {
         const bookData = await axios.get(`${openLibrary}title=${req.params.input}`);
         res.locals.bookData = [{
@@ -53,6 +54,7 @@ module.exports = bookController = {
       const parsed = parseInt(req.params.input);
       if (isNaN(parsed)) return next(); //if it's a string, move on
 
+      const { input } = req.params
       //if not in db, pull from api via 2 calls to get author and other relavent information. If in db, pull from DB
       const openLibraryISBN = "http://openlibrary.org/isbn/";
       const dbfind = await Book.find(req.params.input)
@@ -89,14 +91,26 @@ module.exports = bookController = {
     }
   },
 
-  // postToDb: async (req, res, next) {
-  //   //if API was requested, we post to DB
-  //   if (!res.locals.didSearch) {
-  //     //post to db
-  //   }
-  //   //else just move on, no need to post DB to send to 
-  //   else {
-  //     return next();
-  //   }
-  // },
+  postToDb: async (req, res, next) => {
+    //if API was requested, we post to DB
+    if (!res.locals.didSearch) {
+      //post to db
+      try {
+        Book.create(res.locals.bookData);
+        console.log('posted to db');
+        next();
+      }
+      catch (err) {
+        return next({
+          log: "Error posting data to db, nerd",
+          status: 404,
+          message: "You have an error posting data to db, nerd: " + err,
+        });
+      }
+    }
+    //else just move on, no need to post DB to send to 
+    else {
+      return next();
+    }
+  },
 };

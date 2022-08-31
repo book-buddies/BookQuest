@@ -6,7 +6,8 @@ const MONGO_URI = 'mongodb+srv://user:123@bookcluster.zyxykxa.mongodb.net/?retry
 
 mongoose.connect(MONGO_URI, {
   // sets the name of the DB that our collections are part of
-  dbName: 'bookquest'
+  dbName: 'bookquest',
+  
 })
   .then(() => console.log('Connected to Mongo DB.'))
   .catch(err => console.log(err));
@@ -20,4 +21,4 @@ const bookSchema = new Schema({
 
 const Book = mongoose.model('book', bookSchema);
 
-module.exports = { Book };
+module.exports = Book;

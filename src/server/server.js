@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/:input', bookController.getTitle, bookController.getISBN, 
+app.use('/api/:input', bookController.getTitle, bookController.getISBN, bookController.postToDb, 
   (req, res) =>{res.status(200).json(res.locals.bookData)})
 
 app.get('/', (req, res) => {
