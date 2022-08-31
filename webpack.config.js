@@ -6,7 +6,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: ['./src/client/App.tsx'],
+  entry: ['./src/client/App.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, "build")
@@ -29,9 +29,8 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
-              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
               presets: ['@babel/preset-env', '@babel/preset-react']
             }
           }
@@ -43,7 +42,7 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.tsx?$/,
+        test: /\.(ts | tsx)/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
