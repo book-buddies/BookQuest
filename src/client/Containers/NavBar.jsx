@@ -2,8 +2,8 @@ import { useState, useContext } from 'react'
 import React from 'react';
 import { render } from 'react-dom';
 import { BookContext } from './MainDisplay.jsx'
-// import axios from 'axios';
-import fetch from 'node-fetch';
+import axios from 'axios';
+// import fetch from 'node-fetch';
 
 export const NavBar = () => {
   const context = useContext(BookContext)
@@ -18,11 +18,11 @@ export const NavBar = () => {
     const queryString = format(bookSearch.value);
     console.log('queryString: ', queryString);
     // console.log('inside getRequest function');
-    // const response = await axios.get(`/api/${queryString}`);
+    const response = await axios.get(`/api/${queryString}`);
     // fetch(`https://openlibrary.org/books/OL7353617M.json`)
-    fetch(`/api/the+hobbit`)
-    .then(data=>data.json())
-    .then(result => console.log('data repsonse: ', result))
+    // fetch(`/api/the+hobbit`)
+    // .then(data=>data.json())
+    // .then(result => console.log('data repsonse: ', result))
     // .catch(err=> console.log(err));
     // let response = await axios.get(`http://localhost:8080/api/${queryString}`);
     // let response = await axios({
@@ -36,15 +36,15 @@ export const NavBar = () => {
     // });
     // const response = await axios.get('https://openlibrary.org/books/OL7353617M.json');
     
-    // console.log('THIS IS YOUR DATA FROM THE BACKEND: ', response)
+    console.log('THIS IS YOUR DATA FROM THE BACKEND: ', response.data)
     // const data = 'dummydata' + (Math.random() * 100 ).toString();
     // console.log('dummydata before updating state: ', data)
     // console.log(typeof data)
     //fetch request to backend with booksearch parameters
     //get object with results back
-    // context.setSearchResults(response)
+    context.setSearchResults(response.data)
     // context.setSearchResults(data)
-    // console.log('did this shit work',context.searchResults)
+    // console.log('did this shit work',context.searchResults[0].title)
   }
 
   function format(info) {

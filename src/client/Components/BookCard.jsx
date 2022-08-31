@@ -11,8 +11,8 @@ export default function ResultsContainer({info}) {
       <div>
         Title: {info.title}
         Author: {info.author}
-        ISBN: {info.ISBN}
-          <a href={`https://www.biblio.com/${info.ISBN}`} target='_blank'><button>Biblio button</button></a>
+        ISBN: {info.isbn}
+          <a href={`https://www.biblio.com/${info.isbn}`} target='_blank'><button>Biblio button</button></a>
       </div>
     );
   }
