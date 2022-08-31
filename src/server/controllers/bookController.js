@@ -1,21 +1,14 @@
-import { NextFunction, Request, Response } from "express";
-import path from "path";
-import axios from "axios";
-import { resourceLimits } from "worker_threads";
-import { isNamedExportBindings } from "typescript";
-import { Book } from '../Model.js';
-import { title } from "process";
+// import path from "path";
+// import axios from "axios";
+// import { Book } from "../Model.js"
+
+const path = require('path');
+const axios = require('axios');
+const Book = require('../Model');
 
 
-interface BookData {
-  title: string;
-  author: string;
-  author_key: string;
-  isbn: number;
-}
-
-export const bookController = {
-  getTitle: async (req: Request, res: Response, next: NextFunction) => {
+module.exports = bookController = {
+  getTitle: async (req, res, next) => {
     const openLibrary = "http://openlibrary.org/search.json?";
     
     res.locals.didSearch = false;
@@ -52,7 +45,7 @@ export const bookController = {
     }
   },
 
-  getISBN: async (req: Request, res: Response, next: NextFunction) => {
+  getISBN: async (req, res, next) => {
     try {
 
       res.locals.didSearch = false;
@@ -96,14 +89,14 @@ export const bookController = {
     }
   },
 
-  postToDb: async (req: Request, res: Response, next: NextFunction) {
-    //if API was requested, we post to DB
-    if (!res.locals.didSearch) {
-      //post to db
-    }
-    //else just move on, no need to post DB to send to 
-    else {
-      return next();
-    }
-  },
+  // postToDb: async (req, res, next) {
+  //   //if API was requested, we post to DB
+  //   if (!res.locals.didSearch) {
+  //     //post to db
+  //   }
+  //   //else just move on, no need to post DB to send to 
+  //   else {
+  //     return next();
+  //   }
+  // },
 };

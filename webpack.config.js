@@ -2,11 +2,15 @@ const path = require ('path');
 const webpack = require ('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// import path from 'path';
+// import  webpack from 'webpack';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: ['./src/client/App.tsx'],
+  entry: ['./src/client/App.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, "build")
@@ -50,9 +54,8 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
-              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
               presets: ['@babel/preset-env', '@babel/preset-react']
             }
           }
@@ -62,11 +65,6 @@ module.exports = {
         test: /.(css|scss)$/,
         exclude: [/node_modules/, /client\/scss\/modules/],
         use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
       },
       {
         test: /.(css|scss)$/,
@@ -92,6 +90,6 @@ module.exports = {
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    extensions: ['.js', '.jsx'],
   },
 }
