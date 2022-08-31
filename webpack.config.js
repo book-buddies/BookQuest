@@ -2,6 +2,10 @@ const path = require ('path');
 const webpack = require ('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// import path from 'path';
+// import  webpack from 'webpack';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -12,14 +16,35 @@ module.exports = {
     path: path.resolve(__dirname, "build")
   },
   devServer: {
+    host: 'localhost',
+    port: 8080,
+    // match the output path
     static: {
-      directory: path.join(__dirname, './dist')
+      directory: path.resolve(__dirname, 'dist'),
+      // match the output 'publicPath'
+      publicPath: '/',
     },
-    // contentBase: path.resolve(__dirname, "./dist"),
+    // enable HMR on the devServer
     hot: true,
+    // fallback to root for other urls
+    historyApiFallback: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    /**
+     * proxy is required in order to make api calls to
+     * express server while using hot-reload webpack server
+     * routes api fetch requests from localhost:8080/api/* (webpack dev server)
+     * to localhost:3000/api/* (where our Express server is running)
+     */
     proxy: {
-      '/api/': 'http://localhost:3000',
-    }
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+      '/assets/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+    },
   },
   module: {
     rules: [
@@ -40,11 +65,6 @@ module.exports = {
         test: /.(css|scss)$/,
         exclude: [/node_modules/, /client\/scss\/modules/],
         use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.(ts | tsx)/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
       },
       {
         test: /.(css|scss)$/,
@@ -70,6 +90,6 @@ module.exports = {
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    extensions: ['.js', '.jsx'],
   },
 }

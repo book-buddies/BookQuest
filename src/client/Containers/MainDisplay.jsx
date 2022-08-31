@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 import { render } from 'react-dom';
-import ResultsContainer from './ResultsContainer'
-import { NavBar } from './NavBar'
+import ResultsContainer from './ResultsContainer.jsx'
+import { NavBar } from './NavBar.jsx'
 
 
 // const UserContext = createContext<{
