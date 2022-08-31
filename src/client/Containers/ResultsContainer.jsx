@@ -7,18 +7,18 @@ import { BookContext } from './MainDisplay.jsx';
 export default function ResultsContainer() {
   const context = useContext(BookContext);
   const bookCards = [];
+  const resultsArray = context.searchResults;
   //iterating through response state after it updates, for each object create a BookCard and push to bookCards
   return (
     <ul className='resultsContainer'>
 
-      {/* {bookCards}
+ 
 
-      {
-      context.searchResults.map((book) => (
-        <BookCard/>
+      {/* {
+      resultsArray.map((book) => (
+        <BookCard key={book.ISBN} info={book}/>
       ))
-
-      } */}
+      }  */}
 
     </ul>
   );
