@@ -17,7 +17,7 @@ describe('Route Integration', () => {
   describe('/api', () => {
     describe('GET', ()=> {
         it('responds with a 200 status and a json object', () => { request(server)
-
+          
         })
     })
   })

@@ -74,7 +74,6 @@ module.exports = bookController = {
       //if not in db, pull from api via 2 calls to get author and other relavent information. If in db, pull from DB
       const openLibraryISBN = "http://openlibrary.org/isbn/";
       const dbfind = await Book.find({isbn: input})
-      console.log('dbfind in isbn: ', dbfind)
       if (dbfind.length === 0) {
         res.locals.didSearch = true;
         const isbnBookData = await axios.get(
@@ -110,13 +109,11 @@ module.exports = bookController = {
   },
 
   postToDb: async (req, res, next) => {
-    console.log('switch: ', res.locals.didSearch);
     //if API was requested, we post to DB
     if (res.locals.didSearch) {
       //post to db
       try {
         Book.create(res.locals.bookData);
-        console.log('posted to db');
         next();
       }
       catch (err) {
