@@ -3,19 +3,15 @@ import { render } from 'react-dom';
 import { BookContext } from '../Containers/MainDisplay';
 
 export default function ResultsContainer() {
-  const context = useContext(BookContext);
+  const {context} = useContext(BookContext);
 
   const ISBN = '0316067938'
     return (
       <div>
-        Title: 
+        Title: {context.searchResults.title}
         Author:
         ISBN:
-        Picture:
-       
-          
-          <a href={`https://www.abebooks.com/products/isbn/${ISBN}`} target='_blank'><button>ABE button</button></a>
-
+          <a href={`https://www.biblio.com/${ISBN}`} target='_blank'><button>Biblio button</button></a>
       </div>
     );
   }
