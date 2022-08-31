@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./src/server/server.js & webpack-dev-server",
     "build": "NODE_ENV=production webpack",
-    "dev": "nodemon ./src/server/server.js & NODE_ENV=development webpack serve --open"
+    "dev": "nodemon ./src/server/server.js & NODE_ENV=development webpack serve --open",
+    "test": "jest --verbose"
   },
   "nodemonConfig": {
     "ignore": [
@@ -53,6 +54,7 @@
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
+    "supertest": "^6.2.4",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3"

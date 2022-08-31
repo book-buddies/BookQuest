@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { render } from 'react-dom';
-
 import { BookContext } from '../Containers/MainDisplay.jsx';
 
 
