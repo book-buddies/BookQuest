@@ -1,8 +1,7 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import { render } from 'react-dom';
 import ResultsContainer from './ResultsContainer.jsx'
 import { NavBar } from './NavBar.jsx'
-
 
 // const UserContext = createContext<{
 //   context: string | null,
@@ -51,16 +50,21 @@ import { NavBar } from './NavBar.jsx'
 export const BookContext = createContext();
 
 export const MainDisplay = () => {
-const [searchResults, setSearchResults] = useState('');
+const [searchResults, setSearchResults] = useState(null);
 
 // const value = {searchResults, setSearchResults}
-
+useEffect(()=>{
+  // const title = searchResults.title
+  // const title = searchResults[0].title;
+  console.log('rendered main display')
+}, [searchResults]);
+let title;
+if(searchResults) title = searchResults[0].title
   return (
     <BookContext.Provider value={{searchResults,setSearchResults}}>
       <NavBar/>
-      hello again
-      {searchResults || 'no state yet'}
-      <ResultsContainer/>
+      {/* {title || ' '} */}
+      {searchResults && <ResultsContainer/>}
     </BookContext.Provider>
   )
 }

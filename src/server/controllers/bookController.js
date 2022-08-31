@@ -70,7 +70,6 @@ module.exports = bookController = {
 
       const parsed = parseInt(req.params.input);
       if (isNaN(parsed)) return next(); //if it's a string, move on
-
       const { input } = req.params
       //if not in db, pull from api via 2 calls to get author and other relavent information. If in db, pull from DB
       const openLibraryISBN = "http://openlibrary.org/isbn/";
@@ -81,7 +80,7 @@ module.exports = bookController = {
         const isbnBookData = await axios.get(
           `${openLibraryISBN}${req.params.input}.json`,
         );
-  
+          
         const authorData = await axios.get(
           `https://openlibrary.org${isbnBookData.data.authors[0].key}.json`,
         );
